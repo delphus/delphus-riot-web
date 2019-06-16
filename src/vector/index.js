@@ -218,17 +218,7 @@ function receiveMessage(event) {
     console.log("Got message", event);
 }
 
-class PostMessageHandler extends React.Component {
-    componentDidMount() {
-        window.addEventListener("message", receiveMessage, false);
-    }
-    componentWillUnmount() {
-        window.removeEventListener("message", receiveMessage);
-    }
-    render() {
-        return this.props.children;
-    }
-}
+window.addEventListener("message", receiveMessage, false);
 
 async function loadApp() {
     if (window.vector_indexeddb_worker_script === undefined) {
@@ -363,20 +353,18 @@ async function loadApp() {
 
         const MatrixChat = sdk.getComponent('structures.MatrixChat');
         window.matrixChat = ReactDOM.render(
-            <PostMessageHandler>
-                <MatrixChat
-                    onNewScreen={onNewScreen}
-                    makeRegistrationUrl={makeRegistrationUrl}
-                    ConferenceHandler={VectorConferenceHandler}
-                    config={configJson}
-                    realQueryParams={params}
-                    startingFragmentQueryParams={fragparts.params}
-                    enableGuest={!configJson.disable_guests}
-                    onTokenLoginCompleted={onTokenLoginCompleted}
-                    initialScreenAfterLogin={getScreenFromLocation(window.location)}
-                    defaultDeviceDisplayName={platform.getDefaultDeviceDisplayName()}
-                />
-            </PostMessageHandler>,
+            <MatrixChat
+                onNewScreen={onNewScreen}
+                makeRegistrationUrl={makeRegistrationUrl}
+                ConferenceHandler={VectorConferenceHandler}
+                config={configJson}
+                realQueryParams={params}
+                startingFragmentQueryParams={fragparts.params}
+                enableGuest={!configJson.disable_guests}
+                onTokenLoginCompleted={onTokenLoginCompleted}
+                initialScreenAfterLogin={getScreenFromLocation(window.location)}
+                defaultDeviceDisplayName={platform.getDefaultDeviceDisplayName()}
+            />,
             document.getElementById('matrixchat'),
         );
     } else {
