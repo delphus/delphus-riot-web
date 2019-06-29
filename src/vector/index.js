@@ -214,6 +214,16 @@ function onTokenLoginCompleted() {
     window.location.href = formatted;
 }
 
+function receiveMessage(event) {
+    if (event.origin !== "https://delph.us" && event.origin !== "http://localhost:3000") {
+        console.debug("Message received from unknown origin", event.origin);
+    }
+
+    console.log("Got message", event);
+}
+
+window.addEventListener("message", receiveMessage, false);
+
 async function loadApp() {
     if (window.vector_indexeddb_worker_script === undefined) {
         // If this is missing, something has probably gone wrong with
