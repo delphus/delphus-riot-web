@@ -91,6 +91,7 @@ export default class VectorBasePlatform extends BasePlatform {
         if (this.notificationCount === count) return;
         super.setNotificationCount(count);
         this._updateFavicon();
+        window.parent.postMessage({ type: "NOTIFICATION_COUNT", count }, "*");
     }
 
     setErrorStatus(errorDidOccur: boolean) {
